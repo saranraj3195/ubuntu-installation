@@ -1,0 +1,243 @@
+## INSTALLATION UBUNTU 24.04
+
+
+ ## INSTALLING NODE.JS ON UBUNTU USING NVM
+
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+source ~/.bashrc
+
+nvm install 20
+
+node --version
+
+
+## INSTALLING NODE.JS USING OFFICIAL REPOSITORY
+
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+
+sudo apt-get install -y nodejs
+
+node --version
+
+
+
+
+## MONGODB INSTALL IN UBUTNU24.04
+
+sudo apt-get install gnupg curl
+
+curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+   
+ echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+   
+   
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo service mongod start
+
+sudo service mongod status
+
+sudo service mongod enable 
+
+
+## APACHE2 INSTALL:
+
+sudo apt install apache2 -y 
+
+sudo systemctl enable apache2
+
+sudo systemctl restart apache2
+
+sudo systemctl restart apache2
+
+
+
+php 7.4   install ubuntu 24.04:
+
+
+
+sudo add-apt-repository ppa:ondrej/php -y
+
+sudo apt update 
+
+sudo apt install php8.3 
+
+sudo apt install php8.3-{cli,common,curl,zip,gd,mysql,xml,mbstring,json,intl}
+sudo apt install software-properties-common -y
+sudo apt install php8.2 
+
+sudo apt install php8.2-{cli,common,curl,zip,gd,mysql,xml,mbstring,json,intl}
+
+sudo apt install php8.1 
+
+sudo apt install php8.1-{cli,common,curl,zip,gd,mysql,xml,mbstring,json,intl}
+
+sudo apt install php7.4 
+
+sudo apt install php7.4 php7.4-common libapache2-mod-php7.4 php7.4-cli
+
+sudo apt install php7.4-{cli,common,curl,zip,gd,mysql,xml,mbstring,json,intl}
+
+
+
+## CHANGE DEFAULT PHP VERSION:
+
+sudo update-alternatives --config php
+
+
+
+## INSTALL COMPOSER:
+
+curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+
+HASH=`curl -sS https://composer.github.io/installer.sig`
+
+echo $HASH
+
+php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+
+sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+composer
+
+
+## INSTALL MYSQL
+
+sudo apt update
+sudo apt-get install mysql-server
+sudo systemctl enable mysql
+systemctl is-active mysql
+sudo mysql
+rootuser:
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '^$kydtyo)&E%sss';
+
+FLUSH PRIVILEGES;
+
+User: 
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'jE$!1p$ka0FuSY(&$HJ';  (passowrd must be strong)
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+FLUSH PRIVILEGES;
+
+GRANT SELECT, UPDATE, INSERT, DELETE ON db_name.* TO 'user'@%;
+
+
+
+## INSTAL PHPMYADMIN  
+
+Reference : https://computingforgeeks.com/how-to-install-latest-phpmyadmin-on-ubuntu-debian/
+
+wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+
+tar xvf phpMyAdmin-latest-all-languages.tar.gz
+
+sudo mv phpMyAdmin-*/ /usr/share/phpmyadmin
+
+sudo mkdir -p /var/lib/phpmyadmin/tmp
+sudo chown -R www-data:www-data /var/lib/phpmyadmin
+
+sudo mkdir /etc/phpmyadmin/
+
+sudo cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
+
+ sudo nano /usr/share/phpmyadmin/config.inc.php
+
+add this key 
+$cfg['blowfish_secret'] = 'H2OxcGXxflSd8JwrwVlh6KW6s2rER63i';
+
+add temp path
+$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';
+
+sudo nano /etc/apache2/conf-enabled/phpmyadmin.conf
+
+paste below code:
+
+Alias /phpmyadmin /usr/share/phpmyadmin
+
+<Directory /usr/share/phpmyadmin>
+    Options SymLinksIfOwnerMatch
+    DirectoryIndex index.php
+
+    <IfModule mod_php5.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+    <IfModule mod_php.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+
+</Directory>
+
+# Authorize for setup
+<Directory /usr/share/phpmyadmin/setup>
+    <IfModule mod_authz_core.c>
+        <IfModule mod_authn_file.c>
+            AuthType Basic
+            AuthName "phpMyAdmin Setup"
+            AuthUserFile /etc/phpmyadmin/htpasswd.setup
+        </IfModule>
+        Require valid-user
+    </IfModule>
+</Directory>
+
+# Disallow web access to directories that don't need it
+<Directory /usr/share/phpmyadmin/templates>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/libraries>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/setup/lib>
+    Require all denied
+</Directory>
+
+
+sudo systemctl restart apache2
+
+http://localhost/phpmyadmin/
+
+
+
+
+##Redies install:
+
+sudo apt install redis-server
+
+redis-server -v
+
+sudo nano /etc/redis/redis.conf
+
+maxmemory 256mb
+maxmemory-policy allkeys-lru
+
+sudo systemctl restart redis-server
+
+php extension:
+sudo apt install php-redis
+
+redis-cli
+
