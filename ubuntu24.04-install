@@ -241,3 +241,21 @@ sudo apt install php-redis
 
 redis-cli
 
+
+#Node 22 install
+# Update system packages
+sudo apt update && sudo apt upgrade -y
+
+# Install curl if not available
+sudo apt install -y curl
+
+# Add NodeSource repository for Node.js 22
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+
+# Install Node.js 22
+sudo apt install -y nodejs
+
+# Verify installation
+node -v
+npm -v
+
